@@ -59,4 +59,8 @@
 (setq
 
  ;; directory where projectile will search
- projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming"))
+ projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming")
+
+;; these are the defaults (before I changed them)
+company-idle-delay 0.1
+company-minimum-prefix-length 2)
