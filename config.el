@@ -6,8 +6,8 @@
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
+(setq user-full-name "Yasser Tamimi"
+      user-mail-address "altamimiy89@gmail.com")
 
 ;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
 ;; are the three important ones:
@@ -16,6 +16,9 @@
 ;; + `doom-variable-pitch-font'
 ;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
 ;;   presentations or streaming.
+(setq doom-font (font-spec :family "Source Code Pro" :size 30)
+      doom-variable-pitch-font (font-spec :family "Source Code Pro" :size 30)
+      doom-big-font (font-spec :family "Source Code Pro" :size 48))
 ;;
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
@@ -52,3 +55,8 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+(setq
+
+ ;; directory where projectile will search
+ projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming"))
