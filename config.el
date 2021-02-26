@@ -66,7 +66,7 @@
  (after! company
 '(setq
 company-idle-delay nil
-company-minimum-prefix-length 2))
+company-minimum-prefix-length 1))
 
 ;; protect the prompt from being deleted
 (setq comint-prompt-read-only t)
@@ -88,7 +88,10 @@ company-minimum-prefix-length 2))
 (display-time-mode 1)
 (setq display-time t)
 
-;; keymaping ;;
+;; word wraping
+(+global-word-wrap-mode +1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;; keymaping ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; escape key
 (setq
@@ -96,3 +99,19 @@ company-minimum-prefix-length 2))
  evil-escape-delay 0.2)
 
 (define-key evil-visual-state-map (kbd "ii") 'evil-force-normal-state)
+
+
+;; remove highlight when pressing enter in normal mode
+(define-key evil-normal-state-map (kbd "RET") 'evil-ex-nohighlight)
+
+;; 0 to ^
+(define-key evil-normal-state-map (kbd "0") 'evil-first-non-blank)
+
+;; j and k move visual lines
+(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+
+;; ctrl+arrows to move between windows
+(windmove-default-keybindings 'control)
