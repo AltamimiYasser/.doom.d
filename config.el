@@ -28,7 +28,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;;(setq doom-theme 'doom-one)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -55,12 +55,44 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-
-(setq
+;; Theme
+(setq doom-theme 'doom-dracula)
 
  ;; directory where projectile will search
- projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming")
+(setq projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming"))
 
-;; these are the defaults (before I changed them)
-company-idle-delay 0.1
-company-minimum-prefix-length 2)
+
+ ;; autocomplete delay
+ (after! company
+'(setq
+company-idle-delay nil
+company-minimum-prefix-length 2))
+
+;; protect the prompt from being deleted
+(setq comint-prompt-read-only t)
+
+;; relative line number
+(setq display-line-numbers-type 'visual)
+
+;; send deleted files to trash
+(setq-default delete-by-moving-to-trash t)
+
+;; auto save
+(setq auto-save-default t)
+
+;; undo after insert mode doesn't take all the insert mode as one block
+(setq evil-want-fine-undo t)
+
+;; display time and date in mode-line
+(setq display-time-day-and-date t)
+(display-time-mode 1)
+(setq display-time t)
+
+;; keymaping ;;
+;;
+;; escape key
+(setq
+ evil-escape-key-sequence "ii"
+ evil-escape-delay 0.2)
+
+(define-key evil-visual-state-map (kbd "ii") 'evil-force-normal-state)

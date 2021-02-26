@@ -70,19 +70,20 @@
        fold              ; (nigh) universal code folding
        ;;(format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
-       ;;lispy             ; vim for lisp, for people who don't like vim
+       ;; lispy             ; vim for lisp, for people who don't like vim
 
-       ;; TODO: check if the same as evil-multiedit
-       ;;multiple-cursors  ; editing in many places at once
+       ;; ;; TODO: check if the same as evil-multiedit
+       ;; ;;multiple-cursors  ; editing in many places at once
 
-       ;;objed             ; text object editing for the innocent
-       ;;parinfer          ; turn lisp into python, sort of
-       ;;rotate-text       ; cycle region at point between text candidates
-       snippets          ; my elves. They type so I don't have to
+       ;; ;;objed             ; text object editing for the innocent
+       ;; ;;parinfer          ; turn lisp into python, sort of
+       ;; ;;rotate-text       ; cycle region at point between text candidates
+       ;; snippets
+                                        ; my elves. They type so I don't have to
        word-wrap         ; soft wrapping with language-aware indent
 
        :emacs
-       dired             ; making dired pretty [functional]
+       (dired)             ; making dired pretty [functional]
        electric          ; smarter, keyword-based electric-indent
 
        ;; TODO: search about it online
@@ -98,8 +99,8 @@
        ;;vterm             ; the best terminal emulation in Emacs
 
        :checkers
-       syntax              ; tasing you for every semicolon you forget
-       ;;(spell +flyspell) ; tasing you for misspelling mispelling
+       (syntax +childframe)              ; tasing you for every semicolon you forget
+       (spell +flyspell) ; tasing you for misspelling mispelling
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
