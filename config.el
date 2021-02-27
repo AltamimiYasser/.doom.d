@@ -24,20 +24,30 @@
       doom-variable-pitch-font (font-spec :family "Source Code Pro" :size 30)
       doom-big-font (font-spec :family "Source Code Pro" :size 48))
 
-;; org directory
-(setq org-directory "~/org/")
-(setq doom-theme 'doom-dracula)
 
 ;; directory where projectile will search
 (setq projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming" "~/MEGA/org"))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;company;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; autocomplete delay
 (after! company
   '(setq
-    company-idle-delay nil
+    company-idle-delay 0
     company-minimum-prefix-length 1))
 
+;; yasnippet
+(yas-global-mode 1)
+
+;; companymode
+
+(add-hook 'after-init-hook 'global-company-mode)
+
+;; snippets
+(yas-global-mode 1)
+
+;; company backend group
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;end company;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; protect the prompt from being deleted
 (setq comint-prompt-read-only t)
 
@@ -46,9 +56,6 @@
 
 ;; send deleted files to trash
 (setq-default delete-by-moving-to-trash t)
-
-;; auto save
-(setq auto-save-default t)
 
 ;; undo after insert mode doesn't take all the insert mode as one block
 (setq evil-want-fine-undo t)
@@ -83,14 +90,51 @@
   :init
   '(avy-all-windows t))
 
-;; delete trailing white space before saving and add an empty line at the end of the file
+;; delete kfjsa trailing white space before saving and add an empty line at the end of the file
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 (setq require-final-newline t)
 
 ;; dim inactive screen
 (use-package dimmer
-  :custom (dimmer-fraction 0.3)
+  :custom (dimmer-fraction 0.2)
   :config (dimmer-mode))
+
+;; make lsp a little faster
+(setq read-process-output-max (* 1024 1024)) ; 1mb
+
+;; spell checking
+;; handle most false positives
+(set-flyspell-predicate! '(markdown-mode gfm-mode)
+  #'+markdown-flyspell-word-p)
+
+(defun +markdown-flyspell-word-p ()
+  "Return t if point is on a word that should be spell checked.
+
+Return nil if on a link URL, markup, HTML, or references."
+  (let ((faces (doom-enlist (get-text-property (point) 'face))))
+    (or (and (memq 'font-lock-comment-face faces)
+             (memq 'markdown-code-face faces))
+        (not (cl-loop with unsafe-faces = '(markdown-reference-face
+                                            markdown-url-face
+                                            markdown-markup-face
+                                            markdown-comment-face
+                                            markdown-html-attr-name-face
+                                            markdown-html-attr-value-face
+                                            markdown-html-tag-name-face
+                                            markdown-code-face)
+                      for face in faces
+                      if (memq face unsafe-faces)
+                      return t)))))
+
+;; pop up with ctrl+;
+(require 'flyspell-correct-popup)
+(define-key flyspell-mode-map (kbd "C-;") 'flyspell-correct-wrapper)
+
+;; enable on source code comments
+(require 'flyspell)
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (flyspell-prog-mode)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; keymaping ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -141,17 +185,35 @@
  :leader
  :n "-" 'treemacs)
 
+;; ctrl+c e go to config.el
+(defun open-config-file ()
+  "Open config.el."
+  (interactive)
+  (find-file "~/.doom.d/config.el"))
+
+(bind-key "C-c e" #'open-config-file)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; ORG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq org-superstar-headline-bullets-list '("◉" "○" "✸"))
 (setq org-hide-emphasis-markers t)
 (setq org-directory "~/MEGA/org")
+(setq org-default-notes-file (concat org-directory "/notes.org"))
 
 ;; auto save only org mode
-(add-hook! org-mode-hook)
+(add-hook 'auto-save-hook 'org-save-all-org-buffers)
 
+;; capture template
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/MEGA/org/todo.org" "Tasks")
+         "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/MEGA/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")
+        ("n" "Todo" plain (file+headline "~/MEGA/org/notes.org" "Notes")
+         "* NOTE %?\n  %i\n  %a")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; theme ;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq doom-theme 'doom-dracula)
 (use-package doom-themes
   :config
   ;; Global settings (defaults)

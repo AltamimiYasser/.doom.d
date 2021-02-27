@@ -52,3 +52,4 @@
 ;; disable indent plus so ii work in visual plus
 (package! org-bullets)
 (package! dimmer)
+(package! flyspell-correct-popup)
