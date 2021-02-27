@@ -73,7 +73,7 @@
        ;; lispy             ; vim for lisp, for people who don't like vim
 
        ;; ;; TODO: check if the same as evil-multiedit
-       ;; ;;multiple-cursors  ; editing in many places at once
+       multiple-cursors  ; editing in many places at once
 
        ;; ;;objed             ; text object editing for the innocent
        ;; ;;parinfer          ; turn lisp into python, sort of

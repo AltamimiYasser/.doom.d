@@ -1,44 +1,3 @@
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
-
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
-(setq user-full-name "Yasser Tamimi"
-      user-mail-address "altamimiy89@gmail.com")
-
-;; Doom exposes five (optional) variables for controlling fonts in Doom. Here
-;; are the three important ones:
-;;
-;; + `doom-font'
-;; + `doom-variable-pitch-font'
-;; + `doom-big-font' -- used for `doom-big-font-mode'; use this for
-;;   presentations or streaming.
-(setq doom-font (font-spec :family "Source Code Pro" :size 30)
-      doom-variable-pitch-font (font-spec :family "Source Code Pro" :size 30)
-      doom-big-font (font-spec :family "Source Code Pro" :size 48))
-;;
-;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
-;; font string. You generally only need these two:
-;; (setq doom-font (font-spec :family "monospace" :size 12 :weight 'semi-light)
-;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
-
-;; There are two ways to load a theme. Both assume the theme is installed and
-;; available. You can either set `doom-theme' or manually load a theme with the
-;; `load-theme' function. This is the default:
-;;(setq doom-theme 'doom-one)
-
-;; If you use `org' and don't want your org files in the default location below,
-;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
-
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
-
-
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
 ;; - `load!' for loading external *.el files relative to this one
@@ -55,18 +14,29 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
-;; Theme
+;;
+;; name and email
+(setq user-full-name "Yasser Tamimi"
+      user-mail-address "altamimiy89@gmail.com")
+
+;; font
+(setq doom-font (font-spec :family "Source Code Pro" :size 30)
+      doom-variable-pitch-font (font-spec :family "Source Code Pro" :size 30)
+      doom-big-font (font-spec :family "Source Code Pro" :size 48))
+
+;; org directory
+(setq org-directory "~/org/")
 (setq doom-theme 'doom-dracula)
 
- ;; directory where projectile will search
+;; directory where projectile will search
 (setq projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming"))
 
 
- ;; autocomplete delay
- (after! company
-'(setq
-company-idle-delay nil
-company-minimum-prefix-length 1))
+;; autocomplete delay
+(after! company
+  '(setq
+    company-idle-delay nil
+    company-minimum-prefix-length 1))
 
 ;; protect the prompt from being deleted
 (setq comint-prompt-read-only t)
@@ -90,6 +60,11 @@ company-minimum-prefix-length 1))
 
 ;; word wraping
 (+global-word-wrap-mode +1)
+
+;; display battery
+(unless (equal "Battery status not available"
+               (battery))
+  (display-battery-mode 1))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; keymaping ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -115,3 +90,21 @@ company-minimum-prefix-length 1))
 
 ;; ctrl+arrows to move between windows
 (windmove-default-keybindings 'control)
+
+;; ctro+hjkl move between windows
+(define-key evil-normal-state-map (kbd "C-h") #'evil-window-left)
+(define-key evil-normal-state-map (kbd "C-j") #'evil-window-down)
+(define-key evil-normal-state-map (kbd "C-k") #'evil-window-up)
+(define-key evil-normal-state-map (kbd "C-l") #'evil-window-right)
+
+(define-key evil-motion-state-map (kbd "C-h") #'evil-window-left)
+(define-key evil-motion-state-map (kbd "C-j") #'evil-window-down)
+(define-key evil-motion-state-map (kbd "C-k") #'evil-window-up)
+(define-key evil-motion-state-map (kbd "C-l") #'evil-window-right)
+
+;;;; format with f7
+(defun formate-whole-buffer ()
+  (interactive)
+  (save-excursion
+    (indent-region (point-min) (point-max) nil)))
+(global-set-key [f7] 'formate-whole-buffer)
