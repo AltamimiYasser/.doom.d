@@ -101,7 +101,7 @@
        :checkers
        (syntax +childframe)              ; tasing you for every semicolon you forget
        (spell +flyspell) ; tasing you for misspelling mispelling
-       ;;grammar           ; tasing grammar mistake every you make
+       grammar           ; tasing grammar mistake every you make
 
        :tools
        ;;ansible
@@ -166,7 +166,7 @@
        ;;nim               ; python + lisp at the speed of c
        ;;nix               ; I hereby declare "nix geht mehr!"
        ;;ocaml             ; an objective camel
-       org               ; organize your plain life in plain text
+       (org +pretty)               ; organize your plain life in plain text
        ;;php               ; perl's insecure younger brother
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
@@ -203,3 +203,17 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+;; dracula for org mode
+
+;; Adjust font size of titles level 1 (default 1.3)
+(setq dracula-height-title-1 1.25)
+
+;; Adjust font size of titles level 2 (default 1.1)
+(setq dracula-height-title-1 1.15)
+
+;; Adjust font size of titles level 3 (default 1.0)
+(setq dracula-height-title-1 1.05)
+
+;; Adjust font size of document titles (default 1.44)
+(setq dracula-height-doc-title 1.4)

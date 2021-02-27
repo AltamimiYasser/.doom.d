@@ -29,7 +29,7 @@
 (setq doom-theme 'doom-dracula)
 
 ;; directory where projectile will search
-(setq projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming"))
+(setq projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming" "~/MEGA/org"))
 
 
 ;; autocomplete delay
@@ -75,8 +75,22 @@
       evil-split-window-below t)
 
 ;; treemacs
-(use-package! treemacs
-  )
+;;TODO
+
+;;avy
+;; attatch to all windows
+(use-package! avy
+  :init
+  '(avy-all-windows t))
+
+;; delete trailing white space before saving and add an empty line at the end of the file
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
+(setq require-final-newline t)
+
+;; dim inactive screen
+(use-package dimmer
+  :custom (dimmer-fraction 0.3)
+  :config (dimmer-mode))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; keymaping ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -122,7 +136,35 @@
     (indent-region (point-min) (point-max) nil)))
 (global-set-key [f7] 'formate-whole-buffer)
 
-;; treemacs with ctrl+t
-(map! :after treemacs
-      :leader
-      :n "-" 'treemacs)
+;; treemacs with space+-
+(map!
+ :leader
+ :n "-" 'treemacs)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;; ORG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-superstar-headline-bullets-list '("◉" "○" "✸"))
+(setq org-hide-emphasis-markers t)
+(setq org-directory "~/MEGA/org")
+
+;; auto save only org mode
+(add-hook! org-mode-hook)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;; theme ;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package doom-themes
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-colors") ; use the colorful treemacs theme
+  (doom-themes-treemacs-config)
+
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))

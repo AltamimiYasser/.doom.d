@@ -50,3 +50,5 @@
 ;(unpin! t)
 
 ;; disable indent plus so ii work in visual plus
+(package! org-bullets)
+(package! dimmer)
