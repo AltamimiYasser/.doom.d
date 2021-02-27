@@ -66,6 +66,18 @@
                (battery))
   (display-battery-mode 1))
 
+;; undo
+(setq evil-want-fine-undo t ;; makes insert mode undos genteler
+      undo-limit 80000000)
+
+;; windows
+(setq evil-split-window-right t
+      evil-split-window-below t)
+
+;; treemacs
+(use-package! treemacs
+  )
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; keymaping ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; escape key
@@ -102,9 +114,15 @@
 (define-key evil-motion-state-map (kbd "C-k") #'evil-window-up)
 (define-key evil-motion-state-map (kbd "C-l") #'evil-window-right)
 
+
 ;;;; format with f7
 (defun formate-whole-buffer ()
   (interactive)
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 (global-set-key [f7] 'formate-whole-buffer)
+
+;; treemacs with ctrl+t
+(map! :after treemacs
+      :leader
+      :n "-" 'treemacs)
