@@ -28,12 +28,15 @@
 ;; directory where projectile will search
 (setq projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming" "~/MEGA/org"))
 
+;; ranger default file manager
+(after! ranger
+  (setq ranger-override-dired 'ranger))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;company;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; autocomplete delay
-(after! company
-  '(setq
-    company-idle-delay 0
-    company-minimum-prefix-length 1))
+;; (after! company
+;;   '(setq
+;;     company-idle-delay 0
+;;     company-minimum-prefix-length 1))
 
 ;; yasnippet
 (yas-global-mode 1)
@@ -46,6 +49,22 @@
 (yas-global-mode 1)
 
 ;; company backend group
+
+;; (setq company-idle-delay 0
+;;       company-echo-delay 0
+;;       company-dabbrev-downcase nil
+;;       company-minimum-prefix-length 2
+;;       company-selection-wrap-around t
+;;       company-transformers '(company-sort-by-occurrence
+;;                              company-sort-by-backend-importance))
+
+(setq company-idle-delay 0
+      company-echo-delay 0
+      company-minimum-prefix-length 1
+      company-dabbrev-downcase nil
+      company-selection-wrap-around t
+      company-transformers '(company-sort-by-occurrence
+                             company-sort-by-backend-importance))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;end company;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; protect the prompt from being deleted
@@ -66,7 +85,7 @@
 (setq display-time t)
 
 ;; word wraping
-(+global-word-wrap-mode +1)
+;(+global-word-wrap-mode +1)
 
 ;; display battery
 (unless (equal "Battery status not available"
@@ -136,6 +155,10 @@ Return nil if on a link URL, markup, HTML, or references."
           (lambda ()
             (flyspell-prog-mode)))
 
+;; start up on todo items
+(setq initial-buffer-choice "~/MEGA/org/todo.org")
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; keymaping ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; escape key
@@ -194,25 +217,28 @@ Return nil if on a link URL, markup, HTML, or references."
 (bind-key "C-c e" #'open-config-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;; ORG ;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(after! org
+  (setq org-directory "~/MEGA/org"
+        org-agenda-files "~/MEGA/org"
+        org-default-notes-file "~/MEGA/org/notes.org"
+        org-hide-emphasis-markers t
+        org-log-done 'time
+        org-superstar-headline-bullets-list '("◉" "○" "✸")))
 
-(setq org-superstar-headline-bullets-list '("◉" "○" "✸"))
-(setq org-hide-emphasis-markers t)
-(setq org-directory "~/MEGA/org")
-(setq org-default-notes-file (concat org-directory "/notes.org"))
+;; source code appearance
+(setq org-src-fontify-natively t
+      org-src-tab-acts-natively t
+      org-confirm-babel-evaluate nil
+      org-edit-src-content-indentation 0)
 
 ;; auto save only org mode
 (add-hook 'auto-save-hook 'org-save-all-org-buffers)
 
-;; capture template
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/MEGA/org/todo.org" "Tasks")
-         "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/MEGA/org/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")
-        ("n" "Todo" plain (file+headline "~/MEGA/org/notes.org" "Notes")
-         "* NOTE %?\n  %i\n  %a")))
+;; look
+(setq org-ellipsis " ▾")
+(setq org-pretty-entities t)
+;; capture template: NOTE: had to change it in ~/.emacs.d/modules/lang/org/config.el
 
-(setq org-agenda-files "~/MEGA/org" )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; theme ;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq doom-theme 'doom-dracula)
