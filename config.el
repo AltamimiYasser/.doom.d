@@ -212,7 +212,7 @@ Return nil if on a link URL, markup, HTML, or references."
         ("n" "Todo" plain (file+headline "~/MEGA/org/notes.org" "Notes")
          "* NOTE %?\n  %i\n  %a")))
 
-(setq org-agenda-files "~/MEGA/org" "~/.doom.d/")
+(setq org-agenda-files "~/MEGA/org" )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; theme ;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq doom-theme 'doom-dracula)
