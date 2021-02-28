@@ -53,3 +53,4 @@
 (package! org-bullets)
 (package! dimmer)
 (package! flyspell-correct-popup)
+(package! command-log-mode)
