@@ -28,8 +28,7 @@
 ;; directory where projectile will search
 (setq projectile-project-search-path '("~/MEGA/dotfiles" "~/MEGA/Programming" "~/MEGA/org"))
 
-;; ranger default file manager
-(after! ranger
+(after! dired
   (setq ranger-override-dired 'ranger))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;company;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; autocomplete delay
