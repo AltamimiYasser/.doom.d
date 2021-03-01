@@ -7,7 +7,12 @@
    (lambda ()
      (org-archive-subtree)
      (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
-   "/DONE" 'tree))
+   "/DONE" 'tree)
+  (org-map-entries
+   (lambda ()
+     (org-archive-subtree)
+     (setq org-map-continue-from (org-element-property :begin (org-element-at-point))))
+   "/KILL" 'tree))
 
 (map!
  :leader
