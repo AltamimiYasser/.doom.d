@@ -108,7 +108,7 @@
   :init
   '(avy-all-windows t))
 
-;; delete kfjsa trailing white space before saving and add an empty line at the end of the file
+;; delete trailing white space before saving and add an empty line at the end of the file
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 (setq require-final-newline t)
 
@@ -201,6 +201,13 @@ Return nil if on a link URL, markup, HTML, or references."
   (save-excursion
     (indent-region (point-min) (point-max) nil)))
 (global-set-key [f7] 'formate-whole-buffer)
+
+;; web-mode 2 indentation
+(defun my-web-mode-hook ()
+  "Hooks for web-mode"
+  (setq web-mode-markup-indent-offset 2)
+  )
+(add-hook 'web-mode-hook 'my-web-mode-hook)
 
 ;; treemacs with space+-
 (map!
