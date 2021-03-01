@@ -70,7 +70,7 @@
        fold              ; (nigh) universal code folding
        ;;(format +onsave)  ; automated prettiness
        ;;god               ; run Emacs commands without modifier keys
-       ;; lispy             ; vim for lisp, for people who don't like vim
+       lispy             ; vim for lisp, for people who don't like vim
 
        ;; ;; TODO: check if the same as evil-multiedit
        multiple-cursors  ; editing in many places at once

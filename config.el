@@ -218,6 +218,17 @@ Return nil if on a link URL, markup, HTML, or references."
 (bind-key "C-c e" #'open-config-file)
 
 
+;; space T go to Todo file
+(defun open-todo-file ()
+  "Open todo.org"
+  (interactive)
+  (find-file "~/MEGA/org/todo.org"))
+
+(map!
+ :leader
+ :n "T" #'open-todo-file)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;; theme ;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq doom-theme 'doom-dracula)
 (use-package doom-themes
